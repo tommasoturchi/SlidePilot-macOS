@@ -243,6 +243,8 @@ extension SlideArrangementView {
                 nextSlideView = slideView
             case .notes:
                 notesSlideView = slideView
+                // Without a notes page half, the notes slide repeats the current slide, which already plays the media
+                slideView.page.isMediaEnabled = false
             }
         }
         

@@ -14,6 +14,12 @@ class PointerDisplayView: ClipfreeView {
     var pointer: PointerView?
     
     
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        // Only displays the pointer, so let links and video controls of the page below receive the mouse
+        return nil
+    }
+    
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setup()

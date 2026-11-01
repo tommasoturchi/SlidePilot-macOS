@@ -19,6 +19,12 @@ class PDFPageView: NSImageView {
     var playerViews = [ConnectedPlayer]()
     var areVideoPlayerControlsEnabled: Bool = true
     var connectToCurrentPlayer: Bool = false
+    /** Disable this property for previews, which should only show the PDF content and not play videos and animated images. */
+    var isMediaEnabled: Bool = true
+    
+    /** Views playing the media of the current page, together with the position of the media on the PDF page. */
+    private var mediaViews = [(view: NSView, bounds: CGRect)]()
+    private var loopObservers = [NSObjectProtocol]()
     
     
     enum DisplayMode {
@@ -197,82 +203,124 @@ class PDFPageView: NSImageView {
         // Update cursor rects
         self.window?.invalidateCursorRects(for: self)
         
-        // Show videos
-        embedVideo()
+        // Show videos and animated images
+        embedMedia()
     }
     
     
-    private func embedVideo() {
-        // Remove previous video if needed
-        players.forEach({ $0.pause() })
-        players.removeAll()
-        playerViews.forEach({ $0.removeFromSuperview() })
-        playerViews.removeAll()
+    
+    
+    // MARK: - Media
+    
+    private func embedMedia() {
+        // Players of the previous page are reused, when the same video continues on this page (e.g. on overlay steps)
+        let previousPlayers = players
+        removeMedia()
         
-        // Search for video annotation
-        guard #available(macOS 10.13, *) else { return }
-        guard let page = pdfDocument?.page(at: currentPage) else { return }
-        let movieAnnoations = page.annotations.filter({ $0.type == "Movie" })
+        // Media is only played on the current slide, other slides show the PDF content (e.g. a poster image)
+        if isMediaEnabled,
+           currentPage == PageController.currentPage,
+           let page = pdfDocument?.page(at: currentPage),
+           let media = pdfDocument?.media(onPage: currentPage) {
+            addMedia(media, on: page, reusing: previousPlayers)
+        }
         
-        for annotation in movieAnnoations {
-            guard let movieValues = annotation.annotationKeyValues["/Movie"] as? [AnyHashable: Any] else { return }
-            guard let fileName = movieValues.values.first as? String else { return }
+        // Stop videos, which are not shown anymore
+        for player in previousPlayers where !players.contains(where: { $0 === player }) {
+            player.pause()
+        }
+    }
+    
+    
+    private func addMedia(_ media: [PDFMedia], on page: PDFPage, reusing previousPlayers: [AVPlayer]) {
+        // Check if this PDFPageView is not a connected player (which means it should not connect to the shared players) &
+        // if this page view presents the presentation part of the page
+        let sharesPlayers = !connectToCurrentPlayer && DisplayController.notesPosition.displayModeForPresentation() == displayMode
+        var reusablePlayers = previousPlayers
+        
+        // Only add media in the visible frame of the page (regarding display mode)
+        let visibleBounds = displayMode.getBounds(for: page)
+        for item in media where visibleBounds.intersects(item.bounds) {
+            if item.isAnimatedImage {
+                // The presenter display and the presentation window show the same player, so that they stay in sync
+                guard let player = AnimatedImagePlayer.player(for: item) else { continue }
+                addMediaView(AnimatedImageView(player: player), at: item.bounds)
+                continue
+            }
             
-            // Create URL
-            guard let movieURL = URL(string: fileName, relativeTo: pdfDocument?.documentURL) else { return }
+            let player: AVPlayer
+            if let index = reusablePlayers.firstIndex(where: { ($0.currentItem?.asset as? AVURLAsset)?.url == item.url }) {
+                player = reusablePlayers.remove(at: index)
+            } else {
+                player = AVPlayer(url: item.url)
+                // Only shared players start playing, so that connected views don't play the sound twice
+                if item.autoplay && sharesPlayers {
+                    player.play()
+                }
+            }
             
-            // Translate bounds according to display mode
-            let pageFrame = self.displayMode.getBounds(for: page)
-            let annotationFrame = NSRect(x: annotation.bounds.minX - pageFrame.minX,
-                                         y: annotation.bounds.minY - pageFrame.minY,
-                                         width: annotation.bounds.width,
-                                         height: annotation.bounds.height)
+            if item.loops && sharesPlayers {
+                // Rewind when reaching the end, the observer is removed when the page changes
+                player.actionAtItemEnd = .none
+                loopObservers.append(NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak player] _ in
+                    player?.seek(to: .zero)
+                    player?.play()
+                })
+            } else {
+                player.actionAtItemEnd = .pause
+            }
             
-            // Check if player is in visible frame of page (regarding display mode)
-            guard annotationFrame.maxX > pageFrame.minX ||
-                  annotationFrame.minX < pageFrame.maxX ||
-                  annotationFrame.maxY > pageFrame.minY ||
-                  annotationFrame.minY < pageFrame.maxY else { return }
-                    
-            let player = AVPlayer(url: movieURL)
             let playerView = ConnectedPlayer()
             playerView.player = player
-            playerView.translatesAutoresizingMaskIntoConstraints = false
             playerView.areControlsEnabled = areVideoPlayerControlsEnabled
-            self.addSubview(playerView)
-            
-            // TODO: TranslateBounds
-            guard let pageSize = self.image?.size else { return }
-            let relativeFrame = NSRect(x: annotationFrame.minX / pageSize.width,
-                                       y: annotationFrame.minY / pageSize.height,
-                                       width: annotationFrame.width / pageSize.width,
-                                       height: annotationFrame.height / pageSize.height)
-            
-            
-            
-            
-            self.addConstraints([
-                NSLayoutConstraint(item: playerView, attribute: .left, relatedBy: .equal, toItem: self, attribute: .right, multiplier: relativeFrame.minX, constant: 0),
-                NSLayoutConstraint(item: playerView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0-relativeFrame.minY, constant: 0),
-                NSLayoutConstraint(item: playerView, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: relativeFrame.width, constant: 0),
-                NSLayoutConstraint(item: playerView, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: relativeFrame.height, constant: 0)
-            ])
-            
-            playerView.connectToSharedPlayer = self.connectToCurrentPlayer
+            addMediaView(playerView, at: item.bounds)
+            playerView.connectToSharedPlayer = connectToCurrentPlayer
             
             players.append(player)
             playerViews.append(playerView)
         }
         
-        // Check if this PDFPageView is showing the current page &
-        // if it's not a connected player (which means it should not connect to the shared players) &
-        // if this page view present the presentation part of the page &
-        // if there were any movie annotations found on the page
-        if self.currentPage == PageController.currentPage,
-           connectToCurrentPlayer == false,
-           DisplayController.notesPosition.displayModeForPresentation() == self.displayMode,
-           movieAnnoations.count > 0 {
+        if sharesPlayers {
             ConnectedPlayer.sharedPlayers = players
+        }
+    }
+    
+    
+    private func addMediaView(_ view: NSView, at bounds: CGRect) {
+        // Keep media below the black and white curtain
+        addSubview(view, positioned: .below, relativeTo: coverView)
+        mediaViews.append((view, bounds))
+        layoutMedia()
+    }
+    
+    
+    private func removeMedia() {
+        loopObservers.forEach({ NotificationCenter.default.removeObserver($0) })
+        loopObservers.removeAll()
+        mediaViews.forEach({ $0.view.removeFromSuperview() })
+        mediaViews.removeAll()
+        players.removeAll()
+        playerViews.removeAll()
+    }
+    
+    
+    override func layout() {
+        super.layout()
+        layoutMedia()
+    }
+    
+    
+    /** Places the media views on top of their position on the displayed page. */
+    private func layoutMedia() {
+        guard let page = pdfDocument?.page(at: currentPage) else { return }
+        let pageBounds = displayMode.getBounds(for: page)
+        let imageFrame = imageRect()
+        
+        for (view, bounds) in mediaViews {
+            view.frame = NSRect(x: imageFrame.minX + (bounds.minX - pageBounds.minX) / pageBounds.width * imageFrame.width,
+                                y: imageFrame.minY + (bounds.minY - pageBounds.minY) / pageBounds.height * imageFrame.height,
+                                width: bounds.width / pageBounds.width * imageFrame.width,
+                                height: bounds.height / pageBounds.height * imageFrame.height)
         }
     }
     
@@ -481,4 +529,3 @@ class PDFPageView: NSImageView {
         isCoveredBlack = false
     }
 }
-

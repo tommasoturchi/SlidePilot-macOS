@@ -42,6 +42,20 @@ class ConnectedPlayer: AVPlayerView {
         }
     }
     
+    private var statusObservation: NSKeyValueObservation?
+    
+    override var player: AVPlayer? {
+        didSet {
+            // Only show the player when the video can be played, so that the page (e.g. a poster image) stays visible for unsupported formats
+            isHidden = player?.currentItem?.status != .readyToPlay
+            statusObservation = player?.currentItem?.observe(\.status, options: [.new]) { [weak self] item, _ in
+                DispatchQueue.main.async {
+                    self?.isHidden = item.status != .readyToPlay
+                }
+            }
+        }
+    }
+    
     
     
     

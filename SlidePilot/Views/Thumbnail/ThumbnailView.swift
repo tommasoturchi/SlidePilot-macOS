@@ -31,6 +31,7 @@ class ThumbnailView: ClipfreeView {
     private func setup() {
         page = PDFPageView(frame: .zero)
         page.areLinksEnabled = false
+        page.isMediaEnabled = false
         page.translatesAutoresizingMaskIntoConstraints = false
         
         canvas = CanvasView(drawing: Drawing())

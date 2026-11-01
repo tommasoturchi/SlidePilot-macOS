@@ -61,12 +61,14 @@
 		509B97292428CBBD0076B8B4 /* SlideArrangementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509B97282428CBBD0076B8B4 /* SlideArrangementView.swift */; };
 		509B972F2428D74E0076B8B4 /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509B972E2428D74E0076B8B4 /* SlideView.swift */; };
 		50AF62B72525F3C600315A4A /* ConnectedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF62B62525F3C600315A4A /* ConnectedPlayer.swift */; };
+		5E1D1A0F2F00000000000004 /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D1A0F2F00000000000003 /* AnimatedImageView.swift */; };
 		50B14415248037F700532A8B /* NotesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B14414248037F700532A8B /* NotesEditor.swift */; };
 		50B1441724803E5C00532A8B /* SlideInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1441624803E5C00532A8B /* SlideInfoLabel.swift */; };
 		50B3C3032497F5DB006D5E48 /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B3C3022497F5DB006D5E48 /* Drawing.swift */; };
 		50BA1747252E226F00397D8E /* RemotePreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA1745252E226F00397D8E /* RemotePreferencesViewController.swift */; };
 		50BA174A252E228600397D8E /* RemotePreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BA174C252E228600397D8E /* RemotePreferences.xib */; };
 		50BA4EB724A37C1D00E91DFA /* PDFDocument+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA4EB624A37C1D00E91DFA /* PDFDocument+Extension.swift */; };
+		5E1D1A0F2F00000000000002 /* PDFMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D1A0F2F00000000000001 /* PDFMedia.swift */; };
 		50C46F79247E76AD001602EA /* CompletionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C46F78247E76AD001602EA /* CompletionStatus.swift */; };
 		50C77F39242CD32500066752 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50C77F3B242CD32500066752 /* Localizable.strings */; };
 		50C7D08227BD1C4B00A5F191 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7D08127BD1C4B00A5F191 /* CanvasView.swift */; };
@@ -195,12 +197,14 @@
 		509B97282428CBBD0076B8B4 /* SlideArrangementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideArrangementView.swift; sourceTree = "<group>"; };
 		509B972E2428D74E0076B8B4 /* SlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
 		50AF62B62525F3C600315A4A /* ConnectedPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedPlayer.swift; sourceTree = "<group>"; };
+		5E1D1A0F2F00000000000003 /* AnimatedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageView.swift; sourceTree = "<group>"; };
 		50B14414248037F700532A8B /* NotesEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEditor.swift; sourceTree = "<group>"; };
 		50B1441624803E5C00532A8B /* SlideInfoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInfoLabel.swift; sourceTree = "<group>"; };
 		50B3C3022497F5DB006D5E48 /* Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
 		50BA1745252E226F00397D8E /* RemotePreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePreferencesViewController.swift; sourceTree = "<group>"; };
 		50BA174B252E228600397D8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RemotePreferences.xib; sourceTree = "<group>"; };
 		50BA4EB624A37C1D00E91DFA /* PDFDocument+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFDocument+Extension.swift"; sourceTree = "<group>"; };
+		5E1D1A0F2F00000000000001 /* PDFMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFMedia.swift; sourceTree = "<group>"; };
 		50C46F78247E76AD001602EA /* CompletionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionStatus.swift; sourceTree = "<group>"; };
 		50C77F2F242CCCC800066752 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		50C77F3A242CD32500066752 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 				50E2E5EB247AB84C00CE6FDA /* NotesDocument.swift */,
 				50E2E5ED247AC05500CE6FDA /* NSAttributedString+Extension.swift */,
 				50BA4EB624A37C1D00E91DFA /* PDFDocument+Extension.swift */,
+				5E1D1A0F2F00000000000001 /* PDFMedia.swift */,
 				50F862E0252F3DC000699583 /* NSImage+Extension.swift */,
 			);
 			path = Helpers;
@@ -396,6 +401,7 @@
 				508BBD612460591800F81FFF /* UserNotice.swift */,
 				50B1441624803E5C00532A8B /* SlideInfoLabel.swift */,
 				50AF62B62525F3C600315A4A /* ConnectedPlayer.swift */,
+				5E1D1A0F2F00000000000003 /* AnimatedImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -659,10 +665,12 @@
 				5038345C24349F4B00E73E43 /* Colors.swift in Sources */,
 				503FFDFF242A193500B6F438 /* PresentationWindowController.swift in Sources */,
 				50BA4EB724A37C1D00E91DFA /* PDFDocument+Extension.swift in Sources */,
+				5E1D1A0F2F00000000000002 /* PDFMedia.swift in Sources */,
 				508BBD642460966800F81FFF /* CAKeyframeAnimation+Extension.swift in Sources */,
 				509B970C2428AA2F0076B8B4 /* TimingControl.swift in Sources */,
 				50F925E224A2A9F900F8C10B /* AwakeManager.swift in Sources */,
 				50AF62B72525F3C600315A4A /* ConnectedPlayer.swift in Sources */,
+				5E1D1A0F2F00000000000004 /* AnimatedImageView.swift in Sources */,
 				50E2E5E8247AA12800CE6FDA /* NotesTextView.swift in Sources */,
 				50F90A8E273AF07100E66581 /* LayoutEditorViewController.swift in Sources */,
 				50F925DC24A25B7000F8C10B /* Preferences+PaneIdentifiers.swift in Sources */,

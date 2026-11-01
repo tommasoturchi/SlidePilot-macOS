@@ -24,6 +24,11 @@ class CanvasView: NSView {
     /// Controls whether the drawing may be modified using the mouse.
     var allowsDrawing = true
     
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        // When only displaying the drawing, let links and video controls of the page below receive the mouse
+        return allowsDrawing ? super.hitTest(point) : nil
+    }
+    
     /// The line that is currently drawn, while mouse is dragged.
     private var currentLine: Line?
     

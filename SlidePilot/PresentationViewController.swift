@@ -16,6 +16,9 @@ class PresentationViewController: NSViewController {
     
     var canvas: CanvasView!
     
+    /** Time after which a resting cursor is hidden in fullscreen. */
+    private let cursorHideDelay: TimeInterval = 2.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -99,6 +102,9 @@ class PresentationViewController: NSViewController {
         
         // Set canvas to display current drawing if possible
         canvas?.drawing = DocumentController.drawings[PageController.currentPage] ?? Drawing()
+        
+        // Track mouse movement for hiding the cursor
+        self.view.addTrackingArea(NSTrackingArea(rect: .zero, options: [.mouseMoved, .mouseEnteredAndExited, .activeAlways, .inVisibleRect], owner: self, userInfo: nil))
     }
     
     
@@ -116,6 +122,9 @@ class PresentationViewController: NSViewController {
         pageView.setCurrentPage(PageController.currentPage)
         
         updateCanvas()
+        
+        // Also hide a cursor, which rests on the presentation while navigating with the keyboard
+        scheduleCursorHiding()
     }
     
     
@@ -161,6 +170,39 @@ class PresentationViewController: NSViewController {
     
     @objc func crossfadeSlidesDidChange(_ notification: Notification) {
         pageView.crossfadeEnabled = PreferencesController.crossfadeSlides
+    }
+    
+    
+    
+    
+    // MARK: - Cursor
+    
+    override func mouseMoved(with event: NSEvent) {
+        scheduleCursorHiding()
+    }
+    
+    
+    override func mouseEntered(with event: NSEvent) {
+        scheduleCursorHiding()
+    }
+    
+    
+    /** Hides the cursor after it rested on the fullscreen presentation for `cursorHideDelay`. Moving the mouse shows it again. */
+    private func scheduleCursorHiding() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideCursorIfNeeded), object: nil)
+        perform(#selector(hideCursorIfNeeded), with: nil, afterDelay: cursorHideDelay)
+    }
+    
+    
+    @objc private func hideCursorIfNeeded() {
+        guard let window = self.view.window,
+              window.styleMask.contains(.fullScreen),
+              window.frame.contains(NSEvent.mouseLocation) else { return }
+        
+        // Keep the cursor, when it is used as pointer
+        guard !DisplayController.isPointerDisplayed else { return }
+        
+        NSCursor.setHiddenUntilMouseMoves(true)
     }
 }
 

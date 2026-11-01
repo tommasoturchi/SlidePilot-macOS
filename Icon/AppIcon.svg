@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>SlidePilot</title>
+  <defs>
+    <!-- Back slide: SlidePilot blue from top to bottom, turning violet towards the bottom right -->
+    <linearGradient id="back" gradientUnits="userSpaceOnUse" x1="0" y1="248" x2="0" y2="780">
+      <stop offset="0" stop-color="#3ABEFD"/>
+      <stop offset="0.55" stop-color="#2A90F2"/>
+      <stop offset="1" stop-color="#1A62E7"/>
+    </linearGradient>
+    <linearGradient id="back-tint" gradientUnits="userSpaceOnUse" x1="238" y1="248" x2="780" y2="780">
+      <stop offset="0.55" stop-color="#8F7CF6" stop-opacity="0"/>
+      <stop offset="0.78" stop-color="#8F7CF6" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#C792F9"/>
+    </linearGradient>
+    <!-- Front slide: deep at the top, bright at the bottom -->
+    <linearGradient id="front" gradientUnits="userSpaceOnUse" x1="440" y1="280.5" x2="584" y2="743.5">
+      <stop offset="0" stop-color="#1A62E7"/>
+      <stop offset="0.45" stop-color="#1F6FEA"/>
+      <stop offset="1" stop-color="#3ABEFD"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="0.7" stop-color="#FFFFFF" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="front-clip">
+      <rect x="211.5" y="280.5" width="601" height="463" rx="70"/>
+    </clipPath>
+    <filter id="soften" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <!-- macOS icon shape: 824 pt continuous-corner squircle -->
+  <path fill="#FFFFFF" d="M581.88 100c119.75 0 179.63 0 225.37 23.31a213.83 213.83 0 0 1 93.45 93.45c23.31 45.74 23.31 105.62 23.31 225.37v139.75c0 119.75 0 179.63-23.31 225.37a213.83 213.83 0 0 1-93.45 93.45c-45.74 23.31-105.62 23.31-225.37 23.31h-139.75c-119.75 0-179.63 0-225.37-23.31a213.83 213.83 0 0 1-93.45-93.45c-23.31-45.74-23.31-105.62-23.31-225.37v-139.75c0-119.75 0-179.63 23.31-225.37a213.83 213.83 0 0 1 93.45-93.45c45.74-23.31 105.62-23.31 225.37-23.31z"/>
+
+  <!-- Back slide, tilted -->
+  <g transform="rotate(-9.2 509 514)">
+    <rect x="238" y="248" width="542" height="532" rx="101" fill="url(#back)"/>
+    <rect x="238" y="248" width="542" height="532" rx="101" fill="url(#back-tint)"/>
+  </g>
+
+  <!-- Front slide with a soft inner rim -->
+  <rect x="211.5" y="280.5" width="601" height="463" rx="70" fill="url(#front)"/>
+  <g clip-path="url(#front-clip)">
+    <rect x="211.5" y="280.5" width="601" height="463" rx="70" fill="none" stroke="url(#rim)" stroke-width="22" filter="url(#soften)"/>
+    <rect x="211.5" y="280.5" width="601" height="463" rx="70" fill="none" stroke="#1450C8" stroke-opacity="0.45" stroke-width="3"/>
+  </g>
+
+  <!-- Slide frame -->
+  <rect x="327" y="396" width="370" height="232" fill="none" stroke="#FFFFFF" stroke-width="44" stroke-linejoin="round"/>
+</svg>

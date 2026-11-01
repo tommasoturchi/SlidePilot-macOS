@@ -166,6 +166,12 @@ class AnimatedImageView: NSView {
     }
     
     
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        // Pause or resume with the first click, even if the window isn't active
+        return true
+    }
+    
+    
     override func mouseDown(with event: NSEvent) {
         player.togglePlayback()
     }

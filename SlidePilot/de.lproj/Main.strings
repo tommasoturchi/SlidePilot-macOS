@@ -19,8 +19,8 @@
 /* Class = "NSMenuItem"; title = "Enter Full Screen"; ObjectID = "4J7-dP-txa"; */
 "4J7-dP-txa.title" = "Vollbildmodus";
 
-/* Class = "NSMenuItem"; title = "Quit SlidePilot"; ObjectID = "4sb-4s-VLi"; */
-"4sb-4s-VLi.title" = "SlidePilot beenden";
+/* Class = "NSMenuItem"; title = "Quit SlidePilot+"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "SlidePilot+ beenden";
 
 /* Class = "NSMenuItem"; title = "Spacing…"; ObjectID = "50S-x6-AAW"; */
 "50S-x6-AAW.title" = "Zeilenabstand …";
@@ -28,8 +28,8 @@
 /* Class = "NSMenuItem"; title = "Edit"; ObjectID = "5QF-Oa-p0T"; */
 "5QF-Oa-p0T.title" = "Bearbeiten";
 
-/* Class = "NSMenuItem"; title = "About SlidePilot"; ObjectID = "5kV-Vb-QxS"; */
-"5kV-Vb-QxS.title" = "Über SlidePilot";
+/* Class = "NSMenuItem"; title = "About SlidePilot+"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "Über SlidePilot+";
 
 /* Class = "NSMenuItem"; title = "Notes Mode"; ObjectID = "6b4-5J-R1q"; */
 "6b4-5J-R1q.title" = "Notizmodus";
@@ -82,8 +82,8 @@
 /* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
 "F2S-fz-NVQ.title" = "Hilfe";
 
-/* Class = "NSMenuItem"; title = "SlidePilot Help"; ObjectID = "FKE-Sm-Kum"; */
-"FKE-Sm-Kum.title" = "SlidePilot Hilfe";
+/* Class = "NSMenuItem"; title = "SlidePilot+ Help"; ObjectID = "FKE-Sm-Kum"; */
+"FKE-Sm-Kum.title" = "SlidePilot+ Hilfe";
 
 /* Class = "NSButtonCell"; title = "Small"; ObjectID = "FKT-Nb-Trk"; */
 "FKT-Nb-Trk.title" = "Klein";
@@ -154,8 +154,8 @@
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "OY7-WF-poV"; */
 "OY7-WF-poV.title" = "Im Dock ablegen";
 
-/* Class = "NSMenuItem"; title = "Hide SlidePilot"; ObjectID = "Olw-nP-bQN"; */
-"Olw-nP-bQN.title" = "SlidePilot ausblenden";
+/* Class = "NSMenuItem"; title = "Hide SlidePilot+"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "SlidePilot+ ausblenden";
 
 /* Class = "NSButtonCell"; title = "Normal"; ObjectID = "PKP-r8-iYT"; */
 "PKP-r8-iYT.title" = "Normal";

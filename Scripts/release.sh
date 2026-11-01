@@ -72,7 +72,7 @@ cat > "$OUTPUT/appcast.xml" <<EOF
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
   <channel>
-    <title>SlidePilot Typst</title>
+    <title>SlidePilot+</title>
     <item>
       <title>Version $VERSION</title>
       <pubDate>$(LC_ALL=C date -u "+%a, %d %b %Y %H:%M:%S +0000")</pubDate>
@@ -94,5 +94,5 @@ if [[ -n $NOTES ]]; then
 else
     NOTES_OPTION=(--generate-notes)
 fi
-gh release create "$TAG" "$OUTPUT/$ARCHIVE" "$OUTPUT/appcast.xml" --repo "$REPO" --title "SlidePilot Typst $VERSION" "${NOTES_OPTION[@]}"
+gh release create "$TAG" "$OUTPUT/$ARCHIVE" "$OUTPUT/appcast.xml" --repo "$REPO" --title "SlidePilot+ $VERSION" "${NOTES_OPTION[@]}"
 echo "Published $TAG. Installed copies will offer the update on their next check."

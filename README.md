@@ -1,4 +1,4 @@
-# SlidePilot Typst
+# SlidePilot+
 
 <p align="center">
   <img width=120 src="Icon/AppIcon.svg"/>
@@ -47,7 +47,7 @@ Movies embedded with the LaTeX `multimedia` package keep working as in SlidePilo
 
 ## Installing
 
-SlidePilot Typst requires macOS 12 or later. Download the latest `SlidePilot-<version>.zip` from [Releases](https://github.com/tommasoturchi/SlidePilot-macOS/releases), unzip it and move SlidePilot to your Applications folder.
+SlidePilot+ requires macOS 12 or later. Download the latest `SlidePilot-<version>.zip` from [Releases](https://github.com/tommasoturchi/SlidePilot-macOS/releases), unzip it and move SlidePilot to your Applications folder.
 
 The app isn't signed with an Apple Developer ID, so macOS refuses to open it the first time. Open it anyway from **System Settings › Privacy & Security**. After that, SlidePilot keeps itself up to date from the releases of this repository.
 

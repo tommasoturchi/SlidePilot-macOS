@@ -71,6 +71,7 @@
 		5E1D1A0F2F00000000000002 /* PDFMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D1A0F2F00000000000001 /* PDFMedia.swift */; };
 		50C46F79247E76AD001602EA /* CompletionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C46F78247E76AD001602EA /* CompletionStatus.swift */; };
 		50C77F39242CD32500066752 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50C77F3B242CD32500066752 /* Localizable.strings */; };
+		5E1D1A0F2F00000000000006 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E1D1A0F2F00000000000005 /* InfoPlist.strings */; };
 		50C7D08227BD1C4B00A5F191 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7D08127BD1C4B00A5F191 /* CanvasView.swift */; };
 		50C7E664273BB0F400E1A63F /* LayoutConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7E663273BB0F400E1A63F /* LayoutConfigurationView.swift */; };
 		50C7E66E273BCBE000E1A63F /* LayoutSlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C7E66D273BCBE000E1A63F /* LayoutSlideView.swift */; };
@@ -209,6 +210,9 @@
 		50C77F2F242CCCC800066752 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		50C77F3A242CD32500066752 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50C77F3C242CD32600066752 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5E1D1A0F2F00000000000007 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5E1D1A0F2F00000000000008 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5E1D1A0F2F00000000000009 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50C7D08127BD1C4B00A5F191 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		50C7E663273BB0F400E1A63F /* LayoutConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutConfigurationView.swift; sourceTree = "<group>"; };
 		50C7E66D273BCBE000E1A63F /* LayoutSlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSlideView.swift; sourceTree = "<group>"; };
@@ -374,6 +378,7 @@
 				503FFE01242A195300B6F438 /* PresentationViewController.swift */,
 				509B96FC2428A3AE0076B8B4 /* Main.storyboard */,
 				50C77F3B242CD32500066752 /* Localizable.strings */,
+				5E1D1A0F2F00000000000005 /* InfoPlist.strings */,
 				509B97062428A3C40076B8B4 /* Views */,
 				50026AD32430F0CC0049387E /* Helpers */,
 				507098A9252F135C00938927 /* Remote */,
@@ -599,6 +604,7 @@
 				50BA174A252E228600397D8E /* RemotePreferences.xib in Resources */,
 				5074A88024A34FD5005CFDEF /* GeneralPreferences.xib in Resources */,
 				50C77F39242CD32500066752 /* Localizable.strings in Resources */,
+				5E1D1A0F2F00000000000006 /* InfoPlist.strings in Resources */,
 				507E697D253CC64700C00215 /* TrustedDevicesViewController.xib in Resources */,
 				509B96FE2428A3AE0076B8B4 /* Main.storyboard in Resources */,
 				5055BFF5273ED3DE00F97658 /* PointerEditor.xib in Resources */,
@@ -801,6 +807,16 @@
 				50F862EF252F456D00699583 /* de */,
 			);
 			name = RemoteVerificationViewController.xib;
+			sourceTree = "<group>";
+		};
+		5E1D1A0F2F00000000000005 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E1D1A0F2F00000000000007 /* en */,
+				5E1D1A0F2F00000000000008 /* de */,
+				5E1D1A0F2F00000000000009 /* fr */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

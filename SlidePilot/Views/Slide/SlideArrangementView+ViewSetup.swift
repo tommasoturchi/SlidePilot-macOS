@@ -241,6 +241,8 @@ extension SlideArrangementView {
                 currentSlideView = slideView
             case .next:
                 nextSlideView = slideView
+                // The preview shows the current slide for a moment when a document is opened, and stays on it after the last slide
+                slideView.page.isMediaEnabled = false
             case .notes:
                 notesSlideView = slideView
                 // Without a notes page half, the notes slide repeats the current slide, which already plays the media

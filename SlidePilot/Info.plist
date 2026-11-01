@@ -50,8 +50,8 @@
 	<key>NSSupportsSuddenTermination</key>
 	<false/>
 	<key>SUFeedURL</key>
-	<string>https://slidepilotapp.com/updates/versions.xml</string>
+	<string>https://github.com/tommasoturchi/SlidePilot-macOS/releases/latest/download/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>JbvU/sAZ/FzniEFzzSH/a99Nom6WhRX2TGwQbRvhyMM=</string>
+	<string>1jMeRixZMnLUGCY7uw48PXkIUn91ey4uSsGfElUQ+vM=</string>
 </dict>
 </plist>

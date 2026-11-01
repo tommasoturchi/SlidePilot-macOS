@@ -45,9 +45,36 @@ How the media behaves in SlidePilot:
 
 Movies embedded with the LaTeX `multimedia` package keep working as in SlidePilot.
 
+## Installing
+
+SlidePilot Typst requires macOS 12 or later. Download the latest `SlidePilot-<version>.zip` from [Releases](https://github.com/tommasoturchi/SlidePilot-macOS/releases), unzip it and move SlidePilot to your Applications folder.
+
+The app isn't signed with an Apple Developer ID, so macOS refuses to open it the first time. Open it anyway from **System Settings › Privacy & Security**. After that, SlidePilot keeps itself up to date from the releases of this repository.
+
 ## Building
 
-SlidePilot Typst requires macOS 12 or later. Open `SlidePilot.xcodeproj` in Xcode and run the `SlidePilot` scheme. There are no prebuilt downloads.
+Open `SlidePilot.xcodeproj` in Xcode and run the `SlidePilot` scheme.
+
+To build a copy for your Applications folder without setting up code signing, run:
+
+```sh
+Scripts/release.sh --dry-run
+```
+
+The app is then in `build/release/DerivedData/Build/Products/Release`.
+
+## Releasing an update
+
+1. Raise the version (`MARKETING_VERSION`) and the build number (`CURRENT_PROJECT_VERSION`) of the SlidePilot target, and commit.
+2. Run `Scripts/release.sh`, optionally with a Markdown file of release notes. It builds the app, signs the archive for Sparkle and publishes a GitHub release with the archive and `appcast.xml`.
+
+Installed copies look for updates in the `appcast.xml` of the latest release, as set by `SUFeedURL` in `SlidePilot/Info.plist`. They only install updates signed with the matching EdDSA key, whose public half is `SUPublicEDKey`.
+
+The private key is in your login keychain, created with `swift Scripts/sparkle.swift key`. **Back it up**, for example in your password manager, because installed copies can't be updated without it. This prints it:
+
+```sh
+security find-generic-password -s https://sparkle-project.org -a ed25519 -w
+```
 
 ### App icon
 

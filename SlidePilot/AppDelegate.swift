@@ -164,9 +164,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if #available(OSX 10.15, *) {
             let openConfig = NSWorkspace.OpenConfiguration()
             openConfig.addsToRecentItems = true
-            NSWorkspace.shared.open(URL(string: "http://slidepilot.gitbook.io")!, configuration: openConfig, completionHandler: nil)
+            NSWorkspace.shared.open(URL(string: "https://github.com/tommasoturchi/SlidePilot-macOS#readme")!, configuration: openConfig, completionHandler: nil)
         } else {
-            NSWorkspace.shared.open(URL(string: "http://slidepilot.gitbook.io")!)
+            NSWorkspace.shared.open(URL(string: "https://github.com/tommasoturchi/SlidePilot-macOS#readme")!)
         }
     }
 

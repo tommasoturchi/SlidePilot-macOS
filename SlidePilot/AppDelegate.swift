@@ -156,7 +156,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return true
+        // Keep running while the dialog to open a document is shown, e.g. after closing the settings
+        return openFileDialog == nil
     }
     
     
@@ -188,7 +189,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Show open file dialog if no document is opened
         if DocumentController.document == nil {
             presentOpenFileDialog { (fileUrl) in
-                openFile(url: fileUrl)
+                self.openFile(url: fileUrl)
             }
         }
     }
@@ -268,13 +269,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func openDocument(_ sender: NSMenuItem) {
         presentOpenFileDialog { (fileUrl) in
-            requestOpenFile(url: fileUrl)
+            self.requestOpenFile(url: fileUrl)
         }
     }
     
     
+    /** The dialog to open a PDF document, while it is shown. */
+    private var openFileDialog: NSOpenPanel?
+    
     /** Presents the dialog to open a PDF document. */
-    func presentOpenFileDialog(completion: (URL) -> ()) {
+    func presentOpenFileDialog(completion: @escaping (URL) -> ()) {
+        // Bring the dialog to the front, if it is already shown
+        if let dialog = openFileDialog {
+            dialog.makeKeyAndOrderFront(nil)
+            return
+        }
+        
         let dialog = NSOpenPanel();
 
         dialog.title = NSLocalizedString("Choose File", comment: "Title for open file panel.");
@@ -286,8 +296,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         dialog.allowsMultipleSelection = false
         dialog.allowedFileTypes = ["pdf"]
 
-        if (dialog.runModal() == .OK) {
-            if let result = dialog.url {
+        // Don't show the dialog modally, so that the menus stay available, e.g. to check for updates
+        openFileDialog = dialog
+        dialog.begin { (response) in
+            self.openFileDialog = nil
+            if response == .OK, let result = dialog.url {
                 completion(result)
             }
         }
@@ -306,6 +319,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /** Opens the PDF document at the given `URL` in both presenter and presentation window. */
     func openFile(url: URL) {
+        // Close the dialog, when a document is opened in another way, e.g. from Finder
+        openFileDialog?.cancel(nil)
+        
         setupWindows()
         
         // Save preferences for current document

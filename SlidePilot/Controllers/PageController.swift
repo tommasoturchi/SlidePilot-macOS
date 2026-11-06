@@ -55,8 +55,21 @@ class PageController {
     public static func selectPreviousPage(sender: Any?) {
         selectPage(at: previousPage, sender: sender)
     }
-    
-    
+
+
+    /**
+     Shows the current page again after the document was reloaded, or the last page if the new document is too short.
+
+     The page views start at the first page of a new document, so this also works while page switching is disabled.
+     */
+    public static func restoreCurrentPage(sender: Any?) {
+        let lastPage = max(0, DocumentController.pageCount - 1)
+        currentPage = min(currentPage, lastPage)
+        previousPage = min(previousPage, lastPage)
+        NotificationCenter.default.post(name: .didSelectPage, object: sender)
+    }
+
+
     private static func isValidIndex(_ index: Int) -> Bool {
         return index >= 0 && index < DocumentController.pageCount
     }

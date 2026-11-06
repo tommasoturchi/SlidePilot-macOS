@@ -35,14 +35,16 @@ class DocumentController {
         self.document = document
         NotificationCenter.default.post(name: .didOpenDocument, object: sender)
         
-        // Track document changes and update if needed
+        // Track document changes and update if needed. A reloaded document keeps its observer, to not miss changes in between.
         guard let documentURL = document.documentURL else { return }
-        documentObserver = FileObserver.init(URL: documentURL) {
-            DispatchQueue.main.async {
-                reloadDocument()
+        if documentObserver?.url != documentURL {
+            documentObserver = FileObserver.init(URL: documentURL) {
+                DispatchQueue.main.async {
+                    reloadDocument()
+                }
             }
         }
-        
+
         // Reset all drawings
         deleteDrawings(sender: sender)
     }
@@ -212,8 +214,8 @@ class DocumentController {
                 // Update notes document to fill (new) empty pages
                 self.notesDocument?.fillContents(to: pdfDocument.pageCount)
                 
-                // Select the old current page
-                PageController.selectPage(at: PageController.currentPage, sender: self)
+                // Return to the old current page
+                PageController.restoreCurrentPage(sender: self)
             }
         }
         

@@ -37,11 +37,7 @@ class GeneralPreferencesViewController: NSViewController, PreferencePane {
     
     
     @IBAction func awakeCheckBoxPressed(_ sender: NSButton) {
-        if sender.state == .on {
-            PreferencesController.disableSleep()
-        } else {
-            PreferencesController.enableSleep()
-        }
+        PreferencesController.setSleepDisabled(sender.state == .on)
     }
     
     

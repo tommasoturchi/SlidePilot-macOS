@@ -24,46 +24,48 @@ class PreferencesController {
      This method applies the default preferences (from `UserDefaults`). This method should be called on app start.
      */
     public static func applyDefaults() {
+        UserDefaults.standard.register(defaults: [Keys.isSleepDisabled.rawValue: true])
         applySleep()
     }
-    
-    
-    
+
+
+
     // MARK: - Sleeping
-    
+
     private static let awakeManager = AwakeManager()
+
+    /** Whether the display should stay on (no display sleep, no screen saver) while presenting. */
     public static var isSleepDisabled: Bool {
         return UserDefaults.standard.bool(forKey: Keys.isSleepDisabled.rawValue)
     }
-    
-    
+
+    /** Whether a presentation is open, i.e. the presentation window is shown. */
+    private static var isPresenting = false
+
+
+    /** Sets whether the display should stay on while presenting. */
+    public static func setSleepDisabled(_ disabled: Bool) {
+        UserDefaults.standard.set(disabled, forKey: Keys.isSleepDisabled.rawValue)
+        applySleep()
+    }
+
+
+    /** Tells whether a presentation is open, so that the display is only kept on while presenting. */
+    public static func setPresenting(_ presenting: Bool) {
+        isPresenting = presenting
+        applySleep()
+    }
+
+
     /**
-     Applies the default value for disabling sleep.
+     Keeps the display on while a presentation is open and the preference is enabled, and lets it sleep otherwise.
      */
     public static func applySleep() {
-        if isSleepDisabled {
-            disableSleep()
+        if isSleepDisabled && isPresenting {
+            awakeManager.disableScreenSleep()
         } else {
-            enableSleep()
+            awakeManager.enableScreenSleep()
         }
-    }
-    
-    
-    /**
-     Prevents the Mac from falling asleep.
-     */
-    public static func disableSleep() {
-        guard awakeManager.disableScreenSleep() ?? false else { return }
-        UserDefaults.standard.set(true, forKey: Keys.isSleepDisabled.rawValue)
-    }
-    
-    
-    /**
-     Allows the Mac to fall asleep.
-     */
-    public static func enableSleep() {
-        guard awakeManager.enableScreenSleep() else { return }
-        UserDefaults.standard.set(false, forKey: Keys.isSleepDisabled.rawValue)
     }
     
     

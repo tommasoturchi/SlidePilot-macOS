@@ -9,26 +9,35 @@
 import IOKit.pwr_mgt
 
 class AwakeManager {
-    
-    var noSleepAssertionID: IOPMAssertionID = 0
-    var noSleepReturn: IOReturn? // Could probably be replaced by a boolean value, for example 'isBlockingSleep', just make sure 'IOPMAssertionRelease' doesn't get called, if 'IOPMAssertionCreateWithName' failed.
 
-    public func disableScreenSleep(reason: String = "Keep Mac awake during presentations.") -> Bool? {
-        guard noSleepReturn == nil else { return nil }
-        noSleepReturn = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep as CFString,
-                                                IOPMAssertionLevel(kIOPMAssertionLevelOn),
-                                                reason as CFString,
-                                                &noSleepAssertionID)
-        return noSleepReturn == kIOReturnSuccess
+    /** The ID of the assertion that keeps the display on, while it is held. */
+    private var noSleepAssertionID: IOPMAssertionID?
+
+
+    /**
+     Keeps the display on, which also keeps the screen saver from starting and the Mac from going to sleep when idle.
+
+     - returns: Whether the display is kept on.
+     */
+    @discardableResult
+    public func disableScreenSleep(reason: String = "Keep Mac awake during presentations.") -> Bool {
+        guard noSleepAssertionID == nil else { return true }
+        var assertionID = IOPMAssertionID(0)
+        let result = IOPMAssertionCreateWithName(kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
+                                                 IOPMAssertionLevel(kIOPMAssertionLevelOn),
+                                                 reason as CFString,
+                                                 &assertionID)
+        guard result == kIOReturnSuccess else { return false }
+        noSleepAssertionID = assertionID
+        return true
     }
 
-    public func enableScreenSleep() -> Bool {
-        if noSleepReturn != nil {
-            _ = IOPMAssertionRelease(noSleepAssertionID) == kIOReturnSuccess
-            noSleepReturn = nil
-            return true
-        }
-        return false
+
+    /** Lets the display sleep and the screen saver start again. */
+    public func enableScreenSleep() {
+        guard let assertionID = noSleepAssertionID else { return }
+        IOPMAssertionRelease(assertionID)
+        noSleepAssertionID = nil
     }
 
 }

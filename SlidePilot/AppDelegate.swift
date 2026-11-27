@@ -260,6 +260,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.presentationWindowCtrl = presentationWindowCtrl
         self.presentationWindow = presentationWindow
         self.presentationView = presentationView
+
+        // Keep the display on while presenting, if enabled in the preferences
+        PreferencesController.setPresenting(true)
     }
     
     
@@ -1019,6 +1022,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             presentationWindowCtrl = nil
             presentationWindow = nil
             presentationView = nil
+
+            // Let the display sleep again, now that nothing is presented
+            PreferencesController.setPresenting(false)
         }
     }
 }
